@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const rp = require('request-promise');
 const fs = require('fs');
 
-const no_pages = 10;
+const no_pages = 400;
 
 const url = 'https://www.tolet.com.ng/property-for-rent/lagos/?page=';
 
@@ -40,9 +40,11 @@ const loadPage = LoadPageGen(allRequests);
 function extractData() {
     let res = loadPage.next();
     if (res.done) {
-        fs.writeFile('./data.json', JSON.stringify(data), () => {
+        const flattedData = [].concat.apply([], data)
+        fs.writeFile('./data.json', JSON.stringify(flattedData), () => {
             console.log('Data.json updataed')
         });
+        return;
     };
 
     res.value.then((htmlString) => {
