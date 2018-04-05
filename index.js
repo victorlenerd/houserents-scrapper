@@ -1,21 +1,16 @@
 const cheerio = require('cheerio');
-const rp = require('request-promise');
+const fetch = require('node-fetch');
 const fs = require('fs');
 
 const no_pages = 400;
 
 const url = 'https://www.tolet.com.ng/property-for-rent/lagos/?page=';
 
-const allRequests = [];
 const data = [];
 
-for (let i=1; i<no_pages; i++) {
-    allRequests.push(rp(`${url}${i}`));
-}
-
-function* LoadPageGen(pages) {
-    for (let i=1; i<pages.length; i++) {
-        yield pages[i];
+function* LoadPageGen() {
+    for (let i=0; i<no_pages; i++) {
+        yield fetch(`${url}${i}`);
     }
 }
 
@@ -35,26 +30,26 @@ function fetchProperties($) {
     return props;
 }
 
-const loadPage = LoadPageGen(allRequests);
+const loadPage = LoadPageGen();
 
 function extractData() {
     let res = loadPage.next();
-    if (res.done) {
+
+    if (res.done === true) {
         const flattedData = [].concat.apply([], data)
-        fs.writeFile('./data.json', JSON.stringify(flattedData), () => {
+        fs.writeFile('./data.json', JSON.stringify(flattedData), (err) => {
+            if (err) console.error(err);
             console.log('Data.json updataed')
         });
         return;
     };
 
-    res.value.then((htmlString) => {
+    res.value.then(r => r.text()).then((htmlString) => {
         const pageData = fetchProperties(cheerio.load(htmlString));
-        console.log('pageData', pageData);
         data.push(pageData);
         extractData();
     })
     .catch((err) => {
-        console.error(err);
         extractData();
     });
 }
