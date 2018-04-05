@@ -40,3 +40,5 @@ yarn-error.log
 buck-out/
 \.buckd/
 *.keystore
+
+data.json
