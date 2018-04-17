@@ -2,9 +2,9 @@ const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 const fs = require('fs');
 
-const no_pages = 400;
+const no_pages = 499;
 
-const url = 'https://www.tolet.com.ng/property-for-rent/lagos/?page=';
+const url = 'https://www.propertypro.ng/property-for-rent/lagos/flat-apartment?page=';
 
 const data = [];
 
@@ -17,14 +17,16 @@ function* LoadPageGen() {
 function fetchProperties($) {
     const props = [];
 
-    $('.property:not(.featuredProperty)').each(( i, e ) => {
+    $('.property-bg').each(( i, e ) => {
+
         props.push({
-            area: $(e).find('.property-area').text(),
-            price: Number($(e).find('span[itemprop=price]').attr('content')),
-            no_bed: Number($($(e).find('.property-aminities-list > div > span')[0]).text().split(' ')[0]),
-            no_bath: Number($($(e).find('.property-aminities-list > div > span')[1]).text().split(' ')[0]),
-            no_toilets: Number($($(e).find('.property-aminities-list > div > span')[2]).text().split(' ')[0]),
+            area: $(e).find('.pro-location').text(),
+            price: $(e).find('span[itemprop=price]').attr('content'),
+            no_bed: $($(e).find('.prop-aminities > span')[0]).text().split(' ')[0],
+            no_bath: $($(e).find('.prop-aminities > span')[1]).text().split(' ')[0],
+            no_toilets: $($(e).find('.prop-aminities > span')[2]).text().split(' ')[0],
         });
+    
     });
 
     return props;
