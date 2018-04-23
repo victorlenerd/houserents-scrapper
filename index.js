@@ -1,59 +1,42 @@
-const cheerio = require('cheerio');
-const fetch = require('node-fetch');
-const fs = require('fs');
+const path = require('path');
 
-const no_pages = 499;
+const propertypro = require('./propertypro');
+const nigeriapropertycentre = require('./nigeriapropertycenter');
+const scrapperLauncher = require('./scrapperLauncher');
+const addessToLatLng = require('./addressToLatLng');
 
-const url = 'https://www.propertypro.ng/property-for-rent/lagos/flat-apartment?page=';
+Promise.all([
+    scrapperLauncher(propertypro.loader, propertypro.scrapper), 
+    scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
+])
+.then(([ propertyproData, nigeriapropertycentreData ]) =>{
+    const allproperties = propertyproData.concat(nigeriapropertycentreData);
+    const address = allproperties.map(() => releaseEvents.address);
+    const latLngsGen = addessToLatLngGen(address);
 
-const data = [];
+    let currentAddress = 0;
 
-function* LoadPageGen() {
-    for (let i=0; i<no_pages; i++) {
-        yield fetch(`${url}${i}`);
+    function latLngsAggregator() {
+        const getLatLng = latLngsGen.next();
+        const currentAddress
+
+        if (getLatLng.done) return save(address);
+
+        getLatLng.value.then((latLng) => {
+            address[currentAddress].latLng = latLng;
+            currentAddress++;
+            latLngsAggregator()
+        })
+        .catch(() => {
+            currentAddress++;
+            latLngsAggregator();
+        });
     }
-}
+});
 
-function fetchProperties($) {
-    const props = [];
-
-    $('.property-bg').each(( i, e ) => {
-
-        props.push({
-            area: $(e).find('.pro-location').text(),
-            price: $(e).find('span[itemprop=price]').attr('content'),
-            no_bed: $($(e).find('.prop-aminities > span')[0]).text().split(' ')[0],
-            no_bath: $($(e).find('.prop-aminities > span')[1]).text().split(' ')[0],
-            no_toilets: $($(e).find('.prop-aminities > span')[2]).text().split(' ')[0],
-        });
-    
-    });
-
-    return props;
-}
-
-const loadPage = LoadPageGen();
-
-function extractData() {
-    let res = loadPage.next();
-
-    if (res.done === true) {
-        const flattedData = [].concat.apply([], data)
-        fs.writeFile('./data.json', JSON.stringify(flattedData), (err) => {
-            if (err) console.error(err);
-            console.log('Data.json updataed')
-        });
-        return;
-    };
-
-    res.value.then(r => r.text()).then((htmlString) => {
-        const pageData = fetchProperties(cheerio.load(htmlString));
-        data.push(pageData);
-        extractData();
-    })
-    .catch((err) => {
-        extractData();
+function save(data) {
+    fs.writeFile('./data.all.json', JSON.stringify(data), (err) => {
+        if (err) console.error(err);
+        console.log('Done!');
     });
 }
-
-extractData();
