@@ -3,10 +3,10 @@ const path = require('path');
 const propertypro = require('./propertypro');
 const nigeriapropertycentre = require('./nigeriapropertycenter');
 const scrapperLauncher = require('./scrapperLauncher');
-const addessToLatLng = require('./addressToLatLng');
+const addessToLatLngGen = require('./addressToLatLng');
 
 Promise.all([
-    scrapperLauncher(propertypro.loader, propertypro.scrapper), 
+    scrapperLauncher(propertypro.loader, propertypro.scrapper),
     scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
 ])
 .then(([ propertyproData, nigeriapropertycentreData ]) =>{
