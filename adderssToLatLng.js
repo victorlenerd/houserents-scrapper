@@ -11,7 +11,6 @@ const fuse = require('fuse.js')(areas, searchOptions);
 
 let addressSet = new Set(areas);
 
-
 const googleMapsClient = require('@google/maps').createClient({
     key: 'AIzaSyCp3UKASbZkqvCnW3l_RLgM5Ik15JBKpPc',
     Promise: Promise
@@ -29,7 +28,4 @@ function patLatLng(part) {
 module.exports = function (addresses) {
     let addressTokens = tokenize(address);
     let addessParts = addressTokens.slice(0, addressTokens.length - 1);
-
-
-
 }
