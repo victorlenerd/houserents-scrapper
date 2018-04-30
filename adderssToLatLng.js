@@ -1,31 +1,37 @@
 const areas = require('./areas');
+const subAreas = {};
 
 let searchOptions = {
     shouldSort: true,
-    threshold: 0.8,
+    threshold: 0.2,
     maxPatternLength: 32,
     minMatchCharLength: 1
 };
-
-const fuse = require('fuse.js')(areas, searchOptions);
-
-let addressSet = new Set(areas);
-
-const googleMapsClient = require('@google/maps').createClient({
-    key: 'AIzaSyCp3UKASbZkqvCnW3l_RLgM5Ik15JBKpPc',
-    Promise: Promise
-});
 
 function tokenize(address) {
     var splits = address.toLowerCase().split(/\W+|\d+/);
     return splits.filter(w => w.length > 1);
 }
 
-function patLatLng(part) {
-    let { 0: firstMatch } = fuse.search(part).reverse();
-}
-
-module.exports = function (addresses) {
+function addressLatLng(addess) {
     let addressTokens = tokenize(address);
     let addessParts = addressTokens.slice(0, addressTokens.length - 1);
+    let mainArea = addessParts[addressTokens.length - 1];
+
+    existingMatch = areas.filter((area) => (area.match(mainArea) !== null));
+
+    if (existingMatch > 0 && addessParts > 2) {
+        if (addessParts[addressTokens.length - 2] in subAreas[existingMatch[0]].subs) {
+            return subAreas[existingMatch[0]].subs.latLng;
+        } else {
+
+        }
+    }
+}
+
+
+module.exports = function (addresses) {
+    for (let i=0; i<addresses.length: i++) {
+        yield addressLatLng(addresses[i]);
+    }
 }

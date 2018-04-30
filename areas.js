@@ -5,6 +5,12 @@ module.exports = [
             lng: 3.2860
         }
     },
+    "Agbara-Igbesa": {
+        latLng: {
+            lat: 6.52861,
+            lng: 3.135309
+        }
+    },
     "Agege": {
         latLng: {
             lat: 6.615356,
@@ -101,6 +107,12 @@ module.exports = [
             lng: 3.331337
         }
     },
+    "Ijede": {
+        latLng: {
+            lat: 6.570825,
+            lng: 3.596457
+        }
+    },
     "Ibeju Lekki": {
         latLng: {
             lat: 6.496267,
@@ -129,6 +141,12 @@ module.exports = [
         latLng: {
             lat: 6.64974,
             lng: 3.323318
+        }
+    },
+    "Ijaiye": {
+        latLng: {
+            lat: 6.623306,
+            lng: 3.331337
         }
     },
     "Ikeja": {
@@ -167,6 +185,12 @@ module.exports = [
             lng: 3.394971
         }
     },
+    "Ilashe": {
+        latLng: {
+            lat: 6.4042593,
+            lng: 3.295804
+        }
+    },
     "Ilupeju": {
         latLng: {
             lat: 6.553648,
@@ -189,6 +213,18 @@ module.exports = [
         latLng: {
             lat: 6.535498,
             lng: 3.308678
+        }
+    },
+    "Imota": {
+        latLng: {
+            lat: 6.663608,
+            lng: 3.669929
+        }
+    },
+    "Itire": {
+        latLng: {
+            lat: 6.506057,
+            lng: 3.331337
         }
     },
     "Ketu": {
