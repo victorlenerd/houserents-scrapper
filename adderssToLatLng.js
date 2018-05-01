@@ -1,12 +1,23 @@
+const geocoder = require('./geocode');
 const areas = require('./areas');
-const subAreas = {};
+const areaLocalities = {};
+const Fuse = require('fuse.js');
 
 let searchOptions = {
     shouldSort: true,
     threshold: 0.2,
+    includeScore: true,
     maxPatternLength: 32,
     minMatchCharLength: 1
 };
+
+
+function search(list, item) {
+    let fuse = new Fuse(list, options);
+    let results = fuse.search(item);
+    let topResults = results.filter((r)=> r < 0.2);
+    return topResults[0] || null;
+}
 
 function tokenize(address) {
     var splits = address.toLowerCase().split(/\W+|\d+/);
@@ -16,16 +27,21 @@ function tokenize(address) {
 function addressLatLng(addess) {
     let addressTokens = tokenize(address);
     let addessParts = addressTokens.slice(0, addressTokens.length - 1);
-    let mainArea = addessParts[addressTokens.length - 1];
+    let mainArea = addessParts[addessParts.length - 1];
+    let existingArea = search(areas, area);
 
-    existingMatch = areas.filter((area) => (area.match(mainArea) !== null));
-
-    if (existingMatch > 0 && addessParts > 2) {
-        if (addessParts[addressTokens.length - 2] in subAreas[existingMatch[0]].subs) {
-            return subAreas[existingMatch[0]].subs.latLng;
-        } else {
-
+    if (existingArea && addessParts >= 2) {
+        let locality = addessParts[addessParts.length - 2];
+        let mainLocality = search(areaLocalities[existingArea.name].localities, locality);
+        if (mainLocality) {
+            return mainLocality.latLng;
+        } else  {
+            // Geocode state + area + locality and store to localities
         }
+    } else if (existingArea) {
+        return existingArea.latLng;
+    } else {
+        // Geocode address and store to localities
     }
 }
 
