@@ -1,7 +1,9 @@
+const Fuse = require('fuse.js');
 const geocoder = require('./geocode');
+
 const areas = require('./areas');
 const areaLocalities = {};
-const Fuse = require('fuse.js');
+const unkownAreas = {};
 
 let searchOptions = {
     shouldSort: true,
@@ -10,7 +12,6 @@ let searchOptions = {
     maxPatternLength: 32,
     minMatchCharLength: 1
 };
-
 
 function search(list, item) {
     let fuse = new Fuse(list, options);
@@ -22,7 +23,7 @@ function search(list, item) {
 function tokenize(address) {
     var splits = address.toLowerCase().split(/\W+|\d+/);
     return splits.filter(w => w.length > 1);
-}g
+}
 
 function addressLatLng(addess) {
     let addressTokens = tokenize(address);
@@ -41,7 +42,7 @@ function addressLatLng(addess) {
     } else if (existingArea) {
         return existingArea.latLng;
     } else {
-        // Geocode address and store to localities
+        // Geocode address and store to unkownareas
     }
 }
 
