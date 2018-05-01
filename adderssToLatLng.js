@@ -22,7 +22,7 @@ function search(list, item) {
 function tokenize(address) {
     var splits = address.toLowerCase().split(/\W+|\d+/);
     return splits.filter(w => w.length > 1);
-}
+}g
 
 function addressLatLng(addess) {
     let addressTokens = tokenize(address);
