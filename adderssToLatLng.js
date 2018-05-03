@@ -47,16 +47,23 @@ function addressLatLng(addess) {
             return mainLocality.latLng;
         } else  {
             // Geocode state + area + locality and store to localities
+            geocoder().then(() => {
+
+            });
         }
     } else if (existingArea && addessParts <= 1) {
         return existingArea.latLng;
-    } else {
-        // Geocode address and store to unkownareas
+    } else
         let unknownArea = search(unkownAreas, mainArea);
 
         if (unknownArea && addessParts >= 2) {
             let locality = addessParts[addessParts.length - 2];
             let mainLocality = localitySearch(areaLocalities[unknownArea.name].localities, locality);
+        } else {
+            geocoder().then(() => {
+
+            });
+            // Geocode address and store to unkownareas
         }
     }
 }
