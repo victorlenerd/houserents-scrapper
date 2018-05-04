@@ -46,8 +46,7 @@ function addressLatLng(addess) {
         if (mainLocality) {
             return mainLocality.latLng;
         } else  {
-            // Geocode state + area + locality and store to localities
-            geocoder().then(() => {
+            geocoder(addess).then(() => {
 
             });
         }
@@ -60,10 +59,9 @@ function addressLatLng(addess) {
             let locality = addessParts[addessParts.length - 2];
             let mainLocality = localitySearch(areaLocalities[unknownArea.name].localities, locality);
         } else {
-            geocoder().then(() => {
+            geocoder(addess).then(() => {
 
             });
-            // Geocode address and store to unkownareas
         }
     }
 }
