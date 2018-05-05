@@ -46,8 +46,8 @@ function addressLatLng(addess) {
         if (mainLocality) {
             return mainLocality.latLng;
         } else  {
-            geocoder(addess).then(() => {
-
+            geocoder(addess).then((results) => {
+                
             });
         }
     } else if (existingArea && addessParts <= 1) {
@@ -59,7 +59,7 @@ function addressLatLng(addess) {
             let locality = addessParts[addessParts.length - 2];
             let mainLocality = localitySearch(areaLocalities[unknownArea.name].localities, locality);
         } else {
-            geocoder(addess).then(() => {
+            geocoder(addess).then((results) => {
 
             });
         }

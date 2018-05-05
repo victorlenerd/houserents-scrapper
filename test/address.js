@@ -1,5 +1,19 @@
-const addressToLatLng = require('../addressToLatLng');
+const AddressToLatLng = require('../addressToLatLng');
 
-describe("", function () {
+describe("Address To LatLng", function () {
+	let address;
+
+	beforeEach(function () {
+		address = [
+			'26, Bada, Street, Mushin, Lagos',
+			'Ikoyi, Lagos'
+		]
+	});
+
+	it('Return An Iterator', function () {a
+		const addressToLatLng = AddressToLatLng(address);
+		const firstValue = addressToLatLng.next();
+		expect(firstValue.done).to.be(false);
+	});
 
 });
