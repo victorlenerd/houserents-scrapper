@@ -10,7 +10,7 @@ describe("Address To LatLng", function () {
 		]
 	});
 
-	it('Return An Iterator', function () {a
+	it('Return An Iterator', function () {
 		const addressToLatLng = AddressToLatLng(address);
 		const firstValue = addressToLatLng.next();
 		expect(firstValue.done).to.be(false);

@@ -1,5 +1,5 @@
 module.exports = [{
-        name: "Abule Egba"
+        name: "Abule Egba",
         latLng: {
             lat: 6.6503,
             lng: 3.2860
@@ -317,8 +317,8 @@ module.exports = [{
             lat: 6.5088,
             lng: 3.3137
         }
-    },
-    "Orile": {
+    },{
+        name: "Orile",
         latLng: {
             lat: 6.4780,
             lng: 3.3427
