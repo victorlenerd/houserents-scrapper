@@ -10,14 +10,17 @@ let searchOptions = {
     threshold: 0.2,
     includeScore: true,
     maxPatternLength: 32,
-    minMatchCharLength: 1
+    minMatchCharLength: 1,
+    keys: ['name']
 };
 
 function search(list, item) {
     let fuse = new Fuse(list, searchOptions);
     let results = fuse.search(item);
-    let topResults = results.filter((r)=> r < 0.2);
-    return topResults[0] || null;
+    let topResults = results.filter((r) => r.score < 0.2);
+
+    if (topResults[0]) return topResults[0].item; 
+    return null;
 }
 
 function tokenize(address) {
@@ -35,23 +38,35 @@ function localitySearch(localities) {
 }
 
 function addressLatLng(address) {
-    let addressTokens = tokenize(address);
+    let commonWordsInAddess = /block|along|street|beside|behind|cresent|close|road/;
+    let cleanAddress = address.toLowerCase().replace(commonWordsInAddess, "");
+    let addressTokens = tokenize(cleanAddress);
     let addessParts = addressTokens.slice(0, addressTokens.length - 1);
     let mainArea = addessParts[addessParts.length - 1];
     let existingArea = search(areas, mainArea);
 
-    if (existingArea && addessParts >= 2) {
+    if (existingArea && addessParts.length >= 2) {
         let locality = addessParts[addessParts.length - 2];
-        let mainLocality = localitySearch(areaLocalities[existingArea.name].localities, locality);
-        if (mainLocality) {
-            return mainLocality.latLng;
-        } else  {
-            return geocoder(address).then((results) => {
-                return { }
-            });
+        let extistingLocality = areaLocalities[existingArea.name];
+
+        if (extistingLocality && extistingLocality.localities) {
+            let localities = extistingLocality.localities
+            let mainLocality = localitySearch(localities, locality);
+
+            if (mainLocality) {
+                return Promise.resolve(mainLocality.latLng);
+            } else  {
+                return geocoder(address).then((results) => {
+                    return { }
+                });
+            }
         }
-    } else if (existingArea && addessParts <= 1) {
-        return existingArea.latLng;
+
+        return geocoder(address).then((results) => {
+            return { }
+        });
+    } else if (existingArea && addessParts.length <= 1) {
+        return Promise.resolve(existingArea.latLng);
     } else {
         let unknownArea = search(unkownAreas, mainArea);
 

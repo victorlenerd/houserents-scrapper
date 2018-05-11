@@ -4,7 +4,7 @@ const googleMapsClient = require('@google/maps').createClient({
 });
 
 module.exports = function (address) {
-	googleMapsClient.geocode({
+	return googleMapsClient.geocode({
 			address: address,
             region: '.ng'
 		})
