@@ -1,4 +1,4 @@
-const AddressToLatLng = require('../addressToLatLng');
+const { Generator, areaLocalities, unkownAreas } = require('../addressToLatLng');
 const expect = require('chai').expect;
 
 describe("Address To LatLng", function () {
@@ -7,10 +7,10 @@ describe("Address To LatLng", function () {
 
 	beforeEach(function () {
 		address = [
-			'Mushin, Lagos'
+			'26, Bada, Mushin, Lagos'
 		];
 
-		addressToLatLngGenerator = AddressToLatLng(address);
+		addressToLatLngGenerator = Generator(address);
 	});
 
 	it('Return An Iterator', function () {
@@ -21,5 +21,17 @@ describe("Address To LatLng", function () {
 	it('Returns A Promise', function () {
 		const firstValue = addressToLatLngGenerator.next();
 		expect(firstValue.value).to.have.property('then');
+	});
+
+	it('Updates Areas Localities', function (done) {
+		addressToLatLngGenerator.next().value.then(() => {
+			done();
+			expect(areaLocalities['Mushin'].localities[0].name).to.equal('bada');
+		}).catch(function (err) {
+			console.log(err);
+		});
+	});
+
+	it('Updates Unknow Areas', function (done) {
 	});
 });

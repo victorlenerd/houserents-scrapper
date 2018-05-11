@@ -56,14 +56,23 @@ function addressLatLng(address) {
             if (mainLocality) {
                 return Promise.resolve(mainLocality.latLng);
             } else  {
-                return geocoder(address).then((results) => {
-                    return { }
+                return geocoder(`${locality}, ${existingArea.name}, Lagos, Nigeria`)
+                .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+                    areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
+                    return { lat, lng };
+                }).catch(function (err) {
+                    throw err;
                 });
             }
         }
 
-        return geocoder(address).then((results) => {
-            return { }
+        return geocoder(`${locality}, ${existingArea.name}, Lagos, Nigeria`)
+        .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+            areaLocalities[existingArea.name] = { localities: [] };
+            areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
+            return { lat, lng };
+        }).catch(function (err) {
+            throw err;
         });
     } else if (existingArea && addessParts.length <= 1) {
         return Promise.resolve(existingArea.latLng);
@@ -74,15 +83,21 @@ function addressLatLng(address) {
             let locality = addessParts[addessParts.length - 2];
             let mainLocality = localitySearch(areaLocalities[unknownArea.name].localities, locality);
         } else {
-            return geocoder(address).then((results) => {
+            return geocoder('').then((results) => {
                 return {  }
+            }).catch(function (err) {
+                throw err;
             });
         }
     }
 }
 
-module.exports = function* (addresses) {
-    for (let i=0; i<addresses.length; i++) {
-        yield addressLatLng(addresses[i]);
+module.exports = {
+    areaLocalities,
+    unkownAreas,
+    Generator: function* (addresses) {
+        for (let i=0; i<addresses.length; i++) {
+            yield addressLatLng(addresses[i]);
+        }
     }
 }

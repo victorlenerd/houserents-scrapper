@@ -10,11 +10,9 @@ module.exports = function (address) {
 		})
 		.asPromise()
 		.then((response) => {
-			console.log(response.json.results);
             return response.json.results;
 		})
 		.catch((err) => {
-			console.log(err);
             return err;
 		});
 }
