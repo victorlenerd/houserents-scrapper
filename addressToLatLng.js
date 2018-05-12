@@ -57,23 +57,23 @@ function addressLatLng(address) {
                 return Promise.resolve(mainLocality.latLng);
             } else  {
                 return geocoder(`${locality}, ${existingArea.name}, Lagos, Nigeria`)
-                .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
-                    areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
-                    return { lat, lng };
-                }).catch(function (err) {
-                    throw err;
-                });
+                    .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+                        areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
+                        return { lat, lng };
+                    }).catch(function (err) {
+                        throw err;
+                    });
             }
         }
 
         return geocoder(`${locality}, ${existingArea.name}, Lagos, Nigeria`)
-        .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
-            areaLocalities[existingArea.name] = { localities: [] };
-            areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
-            return { lat, lng };
-        }).catch(function (err) {
-            throw err;
-        });
+            .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+                areaLocalities[existingArea.name] = { localities: [] };
+                areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
+                return { lat, lng };
+            }).catch(function (err) {
+                throw err;
+            });
     } else if (existingArea && addessParts.length <= 1) {
         return Promise.resolve(existingArea.latLng);
     } else {
@@ -81,10 +81,48 @@ function addressLatLng(address) {
 
         if (unknownArea && addessParts >= 2) {
             let locality = addessParts[addessParts.length - 2];
-            let mainLocality = localitySearch(areaLocalities[unknownArea.name].localities, locality);
+            let extistingLocality = areaLocalities[unknownArea.name];
+
+            if (extistingLocality && extistingLocality.localities) {
+                let mainLocality = localitySearch(extistingLocality.localities, locality);
+
+                if (mainLocality) {
+                    return Promise.resolve(mainLocality.latLng);
+                } else  {
+                    return geocoder(`${locality}, ${unknownArea.name}, Lagos, Nigeria`)
+                    .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+                        areaLocalities[unknownArea.name].localities.push({ name: locality, latLng: { lat, lng } })
+                        return { lat, lng };
+                    }).catch(function (err) {
+                        throw err;
+                    });
+                }
+            }
+
+            return geocoder(`${locality}, ${unknownArea.name}, Lagos, Nigeria`)
+                .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+                    areaLocalities[unknownArea.name] = { localities: [] };
+                    areaLocalities[unknownArea.name].localities.push({ name: locality, latLng: { lat, lng } })
+                    return { lat, lng };
+                }).catch(function (err) {
+                    throw err;
+                });
         } else {
-            return geocoder('').then((results) => {
-                return {  }
+            return geocoder(`${mainArea}, Lagos, Nigeria`).then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+                unkownAreas[mainArea] = {
+                    name: mainArea,
+                    latLng: {
+                        lat,
+                        lng
+                    }
+                }
+
+                areaLocalities[mainArea] = {
+                    name: mainArea,
+                    localities: []
+                }
+                
+                return { lat, lng };
             }).catch(function (err) {
                 throw err;
             });
