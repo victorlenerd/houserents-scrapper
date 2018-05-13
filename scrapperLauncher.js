@@ -1,5 +1,5 @@
-function scrapperLauncher(loader, scrapper) {
-    return new Promise((reolve, reject) => {
+module.exports  = function scrapperLauncher(loader, scrapper) {
+    return new Promise((resolve, reject) => {
         const data = [];
 
         function scrape() {

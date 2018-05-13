@@ -2,7 +2,9 @@ const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 
 let currentPage = 0;
-const no_pages = 7480;
+const no_pages = 40;
+
+// 7480
 
 function* LoadPageGen() {
     for (let i=0; i<no_pages; i += 20) {

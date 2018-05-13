@@ -3,7 +3,7 @@ const path = require('path');
 const propertypro = require('./propertypro');
 const nigeriapropertycentre = require('./nigeriapropertycenter');
 const scrapperLauncher = require('./scrapperLauncher');
-const addessToLatLngGen = require('./addressToLatLng');
+const { Generator } = require('./addressToLatLng');
 
 Promise.all([
     scrapperLauncher(propertypro.loader, propertypro.scrapper),
@@ -12,14 +12,12 @@ Promise.all([
 .then(([ propertyproData, nigeriapropertycentreData ]) =>{
     const allproperties = propertyproData.concat(nigeriapropertycentreData);
     const address = allproperties.map(() => releaseEvents.address);
-    const latLngsGen = addessToLatLngGen(address);
+    const latLngsGen = Generator(address);
 
     let currentAddress = 0;
 
     function latLngsAggregator() {
         const getLatLng = latLngsGen.next();
-        const currentAddress
-
         if (getLatLng.done) return save(address);
 
         getLatLng.value.then((latLng) => {
