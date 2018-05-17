@@ -54,7 +54,7 @@ function addressLatLng(address) {
             let mainLocality = localitySearch(localities, locality);
 
             if (mainLocality) {
-                return Promise.resolve(mainLocality.latLng);
+                return Promise.resolve(mainLocality);
             } else  {
                 return geocoder(`${locality}, ${existingArea.name}, Lagos, Nigeria`)
                     .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
