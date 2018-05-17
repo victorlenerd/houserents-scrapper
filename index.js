@@ -1,5 +1,5 @@
 const path = require('path');
-
+const fs = require('fs');
 const propertypro = require('./propertypro');
 const nigeriapropertycentre = require('./nigeriapropertycenter');
 const scrapperLauncher = require('./scrapperLauncher');
@@ -9,27 +9,33 @@ Promise.all([
     scrapperLauncher(propertypro.loader, propertypro.scrapper),
     scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
 ])
-.then(([ propertyproData, nigeriapropertycentreData ]) =>{
+.then(([ propertyproData, nigeriapropertycentreData ]) => {
     const allproperties = propertyproData.concat(nigeriapropertycentreData);
-    const address = allproperties.map(() => releaseEvents.address);
-    const latLngsGen = Generator(address);
+    let addresses = allproperties.map((d) => d.address);
+    const latLngsGen = Generator(addresses);
 
     let currentAddress = 0;
 
     function latLngsAggregator() {
         const getLatLng = latLngsGen.next();
-        if (getLatLng.done) return save(address);
+        if (getLatLng.done) {
+            return save(allproperties);
+        }
 
         getLatLng.value.then((latLng) => {
-            address[currentAddress].latLng = latLng;
+            console.log(`LatLng For ${allproperties[currentAddress].address} is:`, latLng)
+            allproperties[currentAddress].latLng = latLng;
             currentAddress++;
             latLngsAggregator()
         })
-        .catch(() => {
+        .catch((err) => {
+            console.error('err', err);
             currentAddress++;
             latLngsAggregator();
         });
     }
+
+    latLngsAggregator();
 });
 
 function save(data) {

@@ -1,3 +1,5 @@
+const cheerio = require('cheerio');
+
 module.exports  = function scrapperLauncher(loader, scrapper) {
     return new Promise((resolve, reject) => {
         const data = [];
@@ -7,7 +9,7 @@ module.exports  = function scrapperLauncher(loader, scrapper) {
 
             if (res.done === true) {
                 const flattedData = [].concat.apply([], data);
-                return resolve(data);
+                return resolve(flattedData);
             };
         
             res.value.then(r => r.text()).then((htmlString) => {
@@ -16,6 +18,7 @@ module.exports  = function scrapperLauncher(loader, scrapper) {
                 scrape();
             })
             .catch((err) => {
+                console.error('err', err);
                 scrape();
             });
         }

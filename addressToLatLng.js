@@ -28,7 +28,7 @@ function tokenize(address) {
     return splits.filter(w => w.length > 1);
 }
 
-function localitySearch(localities) {
+function localitySearch(localities, locality) {
     let mainLocality = search(localities, locality);
     if (mainLocality) {
         return mainLocality.latLng;
@@ -68,7 +68,8 @@ function addressLatLng(address) {
 
         return geocoder(`${locality}, ${existingArea.name}, Lagos, Nigeria`)
             .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
-                areaLocalities[existingArea.name] = { localities: [] };
+                areaLocalities[existingArea.name] = { latLng: {}, localities: [] };
+                areaLocalities[existingArea.name].latLng = { lat, lng };
                 areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
                 return { lat, lng };
             }).catch(function (err) {
