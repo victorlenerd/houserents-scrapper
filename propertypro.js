@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 // 499
 
-const no_pages = 2;
+const no_pages = 499;
 const url = 'https://www.propertypro.ng/property-for-rent/lagos/flat-apartment?page=';
 
 function* LoadPageGen() {

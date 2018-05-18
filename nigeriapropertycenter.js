@@ -2,7 +2,7 @@ const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 
 let currentPage = 0;
-const no_pages = 40;
+const no_pages = 7480;
 
 // 7480
 

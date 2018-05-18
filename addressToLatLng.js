@@ -38,7 +38,7 @@ function localitySearch(localities, locality) {
 }
 
 function addressLatLng(address) {
-    let commonWordsInAddess = /block|along|street|beside|behind|cresent|close|road/;
+    let commonWordsInAddess = /block|along|street|beside|behind|cresent|close|road|estate/;
     let cleanAddress = address.toLowerCase().replace(commonWordsInAddess, "");
     let addressTokens = tokenize(cleanAddress);
     let addessParts = addressTokens.slice(0, addressTokens.length - 1);

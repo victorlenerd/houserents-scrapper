@@ -24,7 +24,8 @@ Promise.all([
 
         getLatLng.value.then((latLng) => {
             console.log(`LatLng For ${allproperties[currentAddress].address} is:`, latLng)
-            allproperties[currentAddress].latLng = latLng;
+            allproperties[currentAddress].lat = latLng.lat;
+            allproperties[currentAddress].lng = latLng.lng;
             currentAddress++;
             latLngsAggregator()
         })
