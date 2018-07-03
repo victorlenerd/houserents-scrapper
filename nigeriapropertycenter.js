@@ -22,7 +22,6 @@ function scrapper($) {
             no_bed: Number($($(e).find('.aux-info > li[itemprop=additionalProperty] > span[itemprop=value]')[0]).text().split(' ')[0]),
             no_bath: Number($($(e).find('.aux-info > li[itemprop=additionalProperty] > span[itemprop=value]')[1]).text().split(' ')[0]),
             no_toilets: Number($($(e).find('.aux-info > li[itemprop=additionalProperty] > span[itemprop=value]')[2]).text().split(' ')[0]),
-            no_parking_spaces: Number($($(e).find('.aux-info > li[itemprop=additionalProperty] > span[itemprop=value]')[3]).text().split(' ')[0]),
         });
     });
 

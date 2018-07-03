@@ -17,7 +17,7 @@ function scrapper($) {
 
     $('.property-bg').each(( i, e ) => {
         data.push({
-            address: $(e).find('.pro-location').text()),
+            address: $(e).find('.pro-location').text(),
             price: Number($(e).find('span[itemprop=price]').attr('content')),
             no_bed: Number($($(e).find('.prop-aminities > span')[0]).text().split(' ')[0]),
             no_bath: Number($($(e).find('.prop-aminities > span')[1]).text().split(' ')[0]),
