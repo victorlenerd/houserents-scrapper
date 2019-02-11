@@ -1,4 +1,4 @@
-const { Generator, areaLocalities, unkownAreas } = require('../addressToLatLng');
+const { Generator, areaLocalities, unkownAreas } = require('../src/addressConverter/addressToLatLng');
 const expect = require('chai').expect;
 
 describe("Address To LatLng", function () {

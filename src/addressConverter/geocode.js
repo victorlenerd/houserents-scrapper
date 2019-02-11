@@ -6,13 +6,13 @@ const googleMapsClient = require('@google/maps').createClient({
 module.exports = function (address) {
 	return googleMapsClient.geocode({
 			address: address,
-            region: '.ng'
+			region: 'ng'
 		})
 		.asPromise()
 		.then((response) => {
-            return response.json.results;
+			return response.json.results;
 		})
 		.catch((err) => {
-            return err;
+			return err;
 		});
 }
