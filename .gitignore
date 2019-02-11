@@ -41,4 +41,5 @@ buck-out/
 \.buckd/
 *.keystore
 
-data.all.jsong
+src/data.all.json
+data.all.json

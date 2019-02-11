@@ -14,10 +14,11 @@ scrapper();
 schedule.scheduleJob('00 23 30 * *', scrapper);
 
 app.get('/data', (req, res) => {
-    fs.readFileSync(path.resolve(__dirname, "data.all.json"), (err, data) => {
-        if (err) throw err;
-        res.send(data);
-    });
+    const dataFilePath = path.resolve(__dirname, "data.all.json");
+
+    if(fs.readFileSync(dataFilePath)) {
+        res.download(dataFilePath);
+    };
 });
 
 app.listen(PORT, HOST);
