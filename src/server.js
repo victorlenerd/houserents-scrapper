@@ -13,11 +13,13 @@ scrapper();
 
 schedule.scheduleJob('00 23 30 * *', scrapper);
 
-app.get('/data', (req, res) => {
-    const dataFilePath = path.resolve(__dirname, "data.all.json");
+app.get('/data/:date', (req, res) => {
+    const dataFilePath = path.resolve(__dirname, 'data', `data.${req.params.date}.json`);
+    
+    res.setHeader('Content-Type', 'application/json');
 
     if(fs.readFileSync(dataFilePath)) {
-        res.download(dataFilePath);
+        res.status(200).sendFile(dataFilePath);
     };
 });
 

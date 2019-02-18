@@ -24,7 +24,7 @@ function scrapper($) {
             no_bed: Number($($(e).find('.prop-aminities > span')[0]).text().split(' ')[0]),
             no_bath: Number($($(e).find('.prop-aminities > span')[1]).text().split(' ')[0]),
             no_toilets: Number($($(e).find('.prop-aminities > span')[2]).text().split(' ')[0]),
-            data_added: stringToDate(date)
+            date_added: stringToDate(date)
         });
     });
 
