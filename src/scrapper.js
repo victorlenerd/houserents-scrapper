@@ -1,4 +1,5 @@
 const path = require('path');
+const http = require('http');
 const fs = require('fs');
 const propertypro = require('./sitescrappers/propertypro');
 const nigeriapropertycentre = require('./sitescrappers/nigeriapropertycenter');
@@ -6,9 +7,13 @@ const scrapperLauncher = require('./scrapperLauncher');
 const { Generator } = require('./addressConverter/addressToLatLng');
 
 function save(data) {
-    fs.writeFile(path.join(__dirname,`/data/data.${new Date().toLocaleDateString().replace(/-|\\/g, '_')}.json`), JSON.stringify(data), (err) => {
+    const downloadDate = new Date().toLocaleDateString().replace(/-|\\/g, '_');
+
+    fs.writeFile(path.join(__dirname,`/data/data.${downloadDate}.json`), JSON.stringify(data), (err) => {
         if (err) console.error(err);
-        console.log('Done!');
+        http.get(`${process.env.DATA_SERVER}/${downloadDate}`, () => {
+            console.log('Done!');
+        });
     });
 }
 
