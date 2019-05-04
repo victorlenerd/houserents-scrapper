@@ -6,7 +6,6 @@ const fs = require("fs")
 const morgan = require("morgan");
 const schedule = require("node-schedule");
 const scrapper = require("./scrapper");
-const http = require("http");
 
 const app = express();
 app.use(morgan());

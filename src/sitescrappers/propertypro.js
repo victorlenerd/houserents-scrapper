@@ -19,7 +19,8 @@ function scrapper($) {
         data.push({
             source: 'property_pro',
             url: $(e).find('.pro-main-cont > a').attr('href'),
-            address: $(e).find('.pro-location').text(),
+            address: $(e).find('.pro-location').text().trim(),
+            description: $(e).find('.pro-description').text().trim(),
             price: Number($(e).find('span[itemprop=price]').attr('content')),
             no_bed: Number($($(e).find('.prop-aminities > span')[0]).text().split(' ')[0]),
             no_bath: Number($($(e).find('.prop-aminities > span')[1]).text().split(' ')[0]),

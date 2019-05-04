@@ -7,7 +7,6 @@
     "test": "test"
   },
   "scripts": {
-    "start:scrapper": "node ./src/scrapper.js",
     "start:server": "node ./src/server.js",
     "test": "mocha ./test"
   },

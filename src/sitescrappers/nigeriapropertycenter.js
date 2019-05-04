@@ -18,24 +18,17 @@ function scrapper($) {
         let no_bath = Number($($(e).find('.aux-info > li')[1]).text().split(' ')[0]);
         let no_toilets = Number($($(e).find('.aux-info > li')[2]).text().split(' ')[0]);
         let address = $(e).find('address > strong').text().trim();
+        let description = $(e).find('.description > p').text().trim();
         let url = $(e).find('a').attr('href');
-        
-        let agent_info = $(e).find(".marketed-by").text().match(/([a-zA-Z]+)|(\d+)/gm);
-        let agent_phone;
-        let agent_name; 
-
-        if (agent_info) {
-            agent_phone = agent_info[agent_info.length - 1];
-            agent_name = agent_info.splice(0, agent_info.length - 1).join(" ");
-        }
 
         let date_added = stringToDate($($(e).find(".added-on")[1]).text().replace("Added ", "").replace("on ", "").toLowerCase());
 
-        if ($(e).find(".ribbon").text() !== "Premium Plus Listing" && !!price && !!no_bed && !!no_toilets && !!no_bath && !!agent_info) {
+        if ($(e).find(".ribbon").text() !== "Premium Plus Listing" && !!price && !!no_bed && !!no_toilets && !!no_bath) {
             data.push({
                 source: 'nigerian_property_center',
                 url,
                 address,
+                description,
                 price,
                 no_bed,
                 no_bath,
