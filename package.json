@@ -7,7 +7,11 @@
     "test": "test"
   },
   "scripts": {
+    "start:cron": "node ./src/cron.js",
     "start:server": "node ./src/server.js",
+    "start:upload": "node ./src/upload.js",
+    "start:server:cron": "concurrently --kill-others \"yarn start:server\"  \"yarn start:cron\"",
+    "start:server:upload": "concurrently --kill-others \"yarn start:server\" \"yarn start:upload\"",
     "test": "mocha ./test"
   },
   "repository": {
@@ -24,6 +28,7 @@
     "@google/maps": "^0.5.5",
     "chai": "^4.1.2",
     "cheerio": "^1.0.0-rc.2",
+    "concurrently": "^4.1.0",
     "date-fns": "^1.30.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",

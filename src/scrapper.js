@@ -7,11 +7,9 @@ const scrapperLauncher = require('./scrapperLauncher');
 const { Generator } = require('./addressConverter/addressToLatLng');
 
 function save(data) {
-    const downloadDate = new Date().toLocaleDateString().replace(/-|\//g, '_');
-
-    fs.writeFile(path.join(__dirname,`/data/data.${downloadDate}.json`), JSON.stringify(data), (err) => {
+    fs.writeFile(path.join(__dirname,`/data/data.json`), JSON.stringify(data), (err) => {
         if (err) throw err;
-        http.get(`${process.env.DATA_SERVER}/data/${downloadDate}`, () => {
+        http.get(`${process.env.DATA_SERVER}/data`, () => {
             console.log('Done!');
         });
     });
