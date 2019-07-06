@@ -1,10 +1,21 @@
 FROM node:11.9.0-alpine
 
-WORKDIR /usr/rentalscrapper
+# Create user
+# RUN groupadd -r nodejs \
+#     && useradd -m -r -g nodejs nodejs
+# USER nodejs
 
-COPY package.json .
-RUN npm install --quiet
+# Create app directory
+RUN mkdir -p /usr/src/scrapper
+WORKDIR /usr/src/scrapper
 
-COPY . .
+# Install app dependencies
+COPY package.json /usr/src/scrapper/
+COPY src /usr/src/scrapper/src
+RUN npm install
+
+ENV NODE_ENV production
+
 EXPOSE 8080
-CMD [ "npm", "start" ]
+
+CMD [ "npm", "run", "start:server:cron"]
