@@ -1,10 +1,5 @@
 FROM node:11.9.0-alpine
 
-# Create user
-# RUN groupadd -r nodejs \
-#     && useradd -m -r -g nodejs nodejs
-# USER nodejs
-
 # Create app directory
 RUN mkdir -p /usr/src/scrapper
 WORKDIR /usr/src/scrapper
