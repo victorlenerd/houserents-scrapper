@@ -24,7 +24,8 @@ steps:
     '--platform',
     'managed',
     '--memory',
-    '350M'
+    '350M',
+    '--allow-unauthenticated'
   ]
 images:
 - gcr.io/$PROJECT_ID/houserents-dev-scrapper
