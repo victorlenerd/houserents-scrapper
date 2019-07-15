@@ -25,7 +25,8 @@ steps:
     'managed',
     '--memory',
     '350M',
-    '--allow-unauthenticated'
+    '--allow-unauthenticated',
+    '--set-env-vars=[DATA_SERVER=https://houserents-dev-api-mamhlwbwkq-uc.a.run.app]',
   ]
 images:
 - gcr.io/$PROJECT_ID/houserents-dev-scrapper
