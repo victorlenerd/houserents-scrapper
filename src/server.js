@@ -10,7 +10,7 @@ app.use(morgan());
 
 app.use('/data', express.static(path.join(__dirname, 'data')));
 
-app.use('/crawl', (req, res) => {
+app.get('/crawl', (req, res) => {
     scrapper();
     res.send(null);
 });
