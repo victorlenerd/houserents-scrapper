@@ -1,9 +1,8 @@
 # OSX
 #
 .DS_Store
-
+taskdefinition.json
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -31,7 +30,6 @@ local.properties
 *.iml
 
 # node.js
-#
 node_modules/
 npm-debug.log
 yarn-error.log
