@@ -1,6 +1,6 @@
 require('dotenv').config();
-const http = require('http');
+const https = require('https');
 
-http.get(`${process.env.DATA_SERVER}/data`, () => {
+https.get(`${process.env.DATA_SERVER}/data`, () => {
     console.log('Done!');
 });
