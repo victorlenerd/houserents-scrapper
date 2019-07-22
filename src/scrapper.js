@@ -1,5 +1,6 @@
 const path = require('path');
 const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const propertypro = require('./sitescrappers/propertypro');
 const nigeriapropertycentre = require('./sitescrappers/nigeriapropertycenter');
@@ -9,9 +10,15 @@ const { Generator } = require('./addressConverter/addressToLatLng');
 function save(data) {
     fs.writeFile(path.join(__dirname,`/data/data.json`), JSON.stringify(data), (err) => {
         if (err) throw err;
-        https.get(`${process.env.DATA_SERVER}/data`, () => {
-            console.log('Done!');
-        });
+        if (process.env.NODE_ENV !== 'development') {
+            https.get(`${process.env.DATA_SERVER}/data`, () => {
+                console.log('Done!');
+            });
+        } else {
+            http.get(`${process.env.DATA_SERVER}/data`, () => {
+                console.log('Done!');
+            });
+        }
     });
 }
 
