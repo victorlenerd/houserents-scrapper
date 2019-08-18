@@ -73,6 +73,7 @@ function addressLatLng(address) {
                 areaLocalities[existingArea.name].localities.push({ name: locality, latLng: { lat, lng } })
                 return { lat, lng };
             }).catch(function (err) {
+                console.log('err', err);
                 throw err;
             });
     } else if (existingArea && addessParts.length <= 1) {
