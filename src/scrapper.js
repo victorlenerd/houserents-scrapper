@@ -1,5 +1,4 @@
 const path = require('path');
-const https = require('https');
 const http = require('http');
 const fs = require('fs');
 const propertypro = require('./sitescrappers/propertypro');
@@ -10,15 +9,9 @@ const { Generator } = require('./addressConverter/addressToLatLng');
 function save(data) {
     fs.writeFile(path.join(__dirname,`/data/data.json`), JSON.stringify(data), (err) => {
         if (err) throw err;
-        if (process.env.NODE_ENV !== 'development') {
-            https.get(`${process.env.DATA_SERVER}/data`, () => {
-                console.log('Done!');
-            });
-        } else {
-            http.get(`${process.env.DATA_SERVER}/data`, () => {
-                console.log('Done!');
-            });
-        }
+        http.get(`${process.env.DATA_SERVER}/data`, () => {
+            console.log('Done!');
+        });
     });
 }
 

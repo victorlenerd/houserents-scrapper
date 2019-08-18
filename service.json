@@ -1,7 +1,7 @@
 {
-    "cluster": "houserents-dev",
+    "cluster": "houserents",
     "serviceName": "scrapper",
-    "taskDefinition": "houserents-dev-scrapper",
+    "taskDefinition": "houserents-scrapper",
     "launchType": "EC2",
     "deploymentConfiguration": {
         "maximumPercent": 200,
