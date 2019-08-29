@@ -22,7 +22,7 @@ function start() {
         scrapperLauncher(propertypro.loader, propertypro.scrapper),
         scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
     ])
-    .then(([ propertyproData, nigeriapropertycentreData ]) => {
+    .then(([ propertyproData, nigeriapropertycentreData = []]) => {
 
         const allproperties = nigeriapropertycentreData.concat(propertyproData);
 
@@ -35,7 +35,6 @@ function start() {
             const getLatLng = latLngsGen.next();
 
             if (getLatLng.done) {
-                console.log('Scrapper: Converting Addresses');
                 console.log('Scrapper: Done');
                 return save(allproperties);
             }
@@ -48,7 +47,6 @@ function start() {
                 latLngsAggregator()
             })
             .catch((err) => {
-                console.error('err', err);
                 currentAddress++;
                 latLngsAggregator();
             });

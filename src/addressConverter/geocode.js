@@ -1,5 +1,5 @@
 const googleMapsClient = require('@google/maps').createClient({
-	key: process.env.MAP_API_KEY,
+	key: "AIzaSyD5nu1Pr0a26gdkbGmwPJr76fDMVe1EBdk",
 	Promise: Promise
 });
 
@@ -15,4 +15,4 @@ module.exports = function (address) {
 		.catch((err) => {
 			return err;
 		});
-}
+};

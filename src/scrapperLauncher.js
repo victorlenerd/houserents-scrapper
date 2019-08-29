@@ -18,7 +18,6 @@ module.exports  = function scrapperLauncher(loader, scrapper) {
                 scrape();
             })
             .catch((err) => {
-                console.error('err', err);
                 scrape();
             });
         }

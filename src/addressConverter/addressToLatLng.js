@@ -110,7 +110,8 @@ function addressLatLng(address) {
                     throw err;
                 });
         } else {
-            return geocoder(`${mainArea}, Lagos, Nigeria`).then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
+            return geocoder(`${mainArea}, Lagos, Nigeria`)
+                .then(([ { address_components, geometry: {location: {lat, lng}} } ]) => {
                 unkownAreas[mainArea] = {
                     name: mainArea,
                     latLng: {
@@ -126,6 +127,7 @@ function addressLatLng(address) {
                 
                 return { lat, lng };
             }).catch(function (err) {
+                console.error(err);
                 throw err;
             });
         }
