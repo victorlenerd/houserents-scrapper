@@ -9,6 +9,9 @@ COPY package.json /usr/src/scrapper/
 COPY src /usr/src/scrapper/src
 RUN npm install
 
+ARG PORT
+ARG DATA_SERVER
+
 ENV NODE_ENV production
 
 EXPOSE 8080

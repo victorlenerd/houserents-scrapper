@@ -9,8 +9,13 @@ const { Generator } = require('./addressConverter/addressToLatLng');
 function save(data) {
     fs.writeFile(path.join(__dirname,`/data/data.json`), JSON.stringify(data), (err) => {
         if (err) throw err;
-        http.get(`${process.env.DATA_SERVER}/data`, () => {
-            console.log('Done!');
+        console.log('Sending request to', `${process.env.DATA_SERVER}/data`);
+        http.get(`${process.env.DATA_SERVER}/data`, (res) => {
+            if (res.statusCode === 200) {
+                console.log("Done!")
+            } else {
+                console.error("Failed!")
+            }
         });
     });
 }
