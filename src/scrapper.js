@@ -12,9 +12,9 @@ function save(data) {
         console.log('Sending request to', `${process.env.DATA_SERVER}/data`);
         http.get(`${process.env.DATA_SERVER}/data`, (res) => {
             if (res.statusCode === 200) {
-                console.log("Done!")
+                console.log("Done! with status code : ", res.statusCode);
             } else {
-                console.error("Failed!")
+                console.error("Failed! wit status code : ", res.statusCode);
             }
         });
     });
