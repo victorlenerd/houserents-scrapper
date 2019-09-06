@@ -8,8 +8,7 @@ const REDIS_PORT = process.env.REDIS_PORT;
 
 const redisClient = redis.createClient({
     host: REDIS_HOST,
-    port: REDIS_PORT,
-    password: REDIS_PASSWORD,
+    port: REDIS_PORT
 });
 
 redisClient.on("error", function (err) {
