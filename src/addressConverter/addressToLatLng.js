@@ -31,15 +31,19 @@ let searchOptions = {
 
 const getCache = (state = 'lagos', area, locality = "0") => new Promise((resolve, reject) => {
     console.log('checking cache');
-    redisClient.hgetall(`${state}:${area}:${locality}`, (err, data) => {
-        if (err || !data) {
-            console.log('not in cache', err, data);
-            return reject(null);
-        } else {
-            console.log('cache::', data);
-            resolve(data);
-        }
-    });
+    try {
+        redisClient.hgetall(`${state}:${area}:${locality}`, (err, data) => {
+            if (err || !data) {
+                console.log('not in cache', err, data);
+                return reject(null);
+            } else {
+                console.log('cache::', data);
+                resolve(data);
+            }
+        });
+    } catch (e) {
+        console.log('getCache::error',e);
+    }
 });
 
 const setCache = (state = 'lagos', area, locality = "0", data) => {

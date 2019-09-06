@@ -24,8 +24,8 @@ function start() {
     console.log('Scrapper: Started');
 
     Promise.all([
-        scrapperLauncher(propertypro.loader, propertypro.scrapper),
-        scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
+        scrapperLauncher(propertypro.loader, propertypro.scrapper)
+        // scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
     ])
     .then(([ propertyproData, nigeriapropertycentreData = []]) => {
 
