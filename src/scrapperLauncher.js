@@ -11,7 +11,7 @@ module.exports  = function scrapperLauncher(loader, scrapper) {
                 const flattedData = [].concat.apply([], data);
                 return resolve(flattedData);
             };
-        
+
             res.value.then(r => r.text()).then((htmlString) => {
                 const pageData = scrapper(cheerio.load(htmlString));
                 data.push(pageData);
@@ -24,4 +24,4 @@ module.exports  = function scrapperLauncher(loader, scrapper) {
 
         scrape();
     });
-}
+};

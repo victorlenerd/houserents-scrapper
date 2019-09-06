@@ -1,7 +1,8 @@
 const fetch = require('node-fetch');
-const dateFns = require('date-fns');
 const stringToDate = require("../utils/stringToDate");
+
 const no_pages = 18080;
+// const no_pages = 180;
 
 function* LoadPageGen() {
     for (let i=0; i<no_pages; i += 20) {
@@ -10,9 +11,9 @@ function* LoadPageGen() {
 }
 
 function scrapper($) {
-    var data = [];
+    let data = [];
 
-    $('.property').each(( i, e ) => {   
+    $('.property').each(( i, e ) => {
         let price = Number($($(e).find('.price')[1]).attr('content'));
         let no_bed = Number($($(e).find('.aux-info > li')[0]).text().split(' ')[0]);
         let no_bath = Number($($(e).find('.aux-info > li')[1]).text().split(' ')[0]);
@@ -46,4 +47,4 @@ const loader = LoadPageGen();
 module.exports = {
     scrapper,
     loader
-}
+};

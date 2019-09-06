@@ -59,7 +59,7 @@ function start() {
 
         console.log('Scrapper: Converting Addresses');
         latLngsAggregator();
-    });   
+    });
 }
 
 module.exports = start;
