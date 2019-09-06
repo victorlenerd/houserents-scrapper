@@ -12,6 +12,10 @@ const redisClient = redis.createClient({
     password: REDIS_PASSWORD,
 });
 
+redisClient.on("error", function (err) {
+    console.log("Redis Error " + err);
+});
+
 const areas = require('./areas');
 const areaLocalities = {};
 const unknownAreas = {};
@@ -26,6 +30,7 @@ let searchOptions = {
 };
 
 const getCache = (state = 'lagos', area, locality = "0") => new Promise((resolve, reject) => {
+    console.log('checking cache');
     redisClient.hgetall(`${state}:${area}:${locality}`, (err, data) => {
         if (err || !data) {
             console.log('not in cache', err, data);
@@ -37,7 +42,10 @@ const getCache = (state = 'lagos', area, locality = "0") => new Promise((resolve
     });
 });
 
-const setCache = (state = 'lagos', area, locality = "0", data) => redisClient.hmset(`${state}:${area}:${locality}`, data);
+const setCache = (state = 'lagos', area, locality = "0", data) => {
+    console.log('setting cache');
+    redisClient.hmset(`${state}:${area}:${locality}`, data);
+}
 
 function search(list, item) {
     let fuse = new Fuse(list, searchOptions);
@@ -189,6 +197,7 @@ module.exports = {
     unknownAreas,
     Generator: function* (addresses) {
         for (let i=0; i<addresses.length; i++) {
+            console.log('Address::', addresses[i]);
             yield addressLatLng(addresses[i]);
         }
     }
