@@ -5,8 +5,8 @@ const path = require("path");
 const morgan = require("morgan");
 
 const app = express();
-app.use(morgan());
-app.use('/data', express.static(path.join(__dirname, 'data')))
+app.use(morgan('combined'));
+app.use('/data', express.static(path.join(__dirname, 'data')));
 
 app.listen(process.env.PORT);
 

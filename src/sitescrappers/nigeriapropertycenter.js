@@ -1,8 +1,7 @@
 const fetch = require('node-fetch');
 const stringToDate = require("../utils/stringToDate");
 
-const no_pages = 18080;
-// const no_pages = 180;
+const no_pages = process.env.NODE_ENV === 'development' ? 80 : 18080;
 
 function* LoadPageGen() {
     for (let i=0; i<no_pages; i += 20) {

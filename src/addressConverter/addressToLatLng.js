@@ -3,7 +3,6 @@ const geocoder = require('./geocode');
 const redis = require('redis');
 
 const REDIS_HOST = process.env.REDIS_HOST;
-const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 const REDIS_PORT = process.env.REDIS_PORT;
 
 const redisClient = redis.createClient({

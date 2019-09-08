@@ -7,6 +7,7 @@ const scrapperLauncher = require('./scrapperLauncher');
 const { Generator } = require('./addressConverter/addressToLatLng');
 
 function save(data) {
+    console.log('data:len', data.length);
     fs.writeFile(path.join(__dirname,`/data/data.json`), JSON.stringify(data), (err) => {
         if (err) throw err;
         console.log('Sending request to', `${process.env.DATA_SERVER}/data`);
