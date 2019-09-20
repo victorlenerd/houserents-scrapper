@@ -35,6 +35,7 @@ const upload = (Key, Body) => new Promise((resolve, reject) => {
 function save(data) {
     upload(`data-${Date.now()}.json`, JSON.stringify(data))
     .then(() => {
+        console.log('Uploaded data');
         http.get(`${process.env.DATA_SERVER}/data/${Date.now()}`, (res) => {
             if (res.statusCode === 200) {
                 console.log("Done! with status code : ", res.statusCode);
