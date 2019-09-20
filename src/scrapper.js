@@ -16,7 +16,9 @@ console.log({
     API_KEY,
     API_SECRET,
     BUCKET_REGION,
-    BUCKET_ID
+    BUCKET_ID,
+    DATA_SERVER: process.env.DATA_SERVER,
+    NODE_ENV: process.env.NODE_ENV
 });
 
 const credentials = new AWS.Credentials(API_KEY, API_SECRET);
