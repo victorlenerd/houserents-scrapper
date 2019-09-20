@@ -16,7 +16,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - docker build --network='host' -f Dockerfile -t $REPOSITORY_URI:latest .
+      - docker build --network='host' --build-arg DATA_SERVER=$DATA_SERVER --build-arg REDIS_HOST=$REDIS_HOST --build-arg REDIS_PORT=$REDIS_PORT --build-arg API_KEY=API_KEY --build-arg API_SECRET=API_SECRET -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
