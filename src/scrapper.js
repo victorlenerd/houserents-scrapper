@@ -12,6 +12,13 @@ const API_SECRET = process.env.API_SECRET;
 const BUCKET_REGION = process.env.BUCKET_REGION;
 const BUCKET_ID = process.env.BUCKET_ID;
 
+console.log({
+    API_KEY,
+    API_SECRET,
+    BUCKET_REGION,
+    BUCKET_ID
+});
+
 const credentials = new AWS.Credentials(API_KEY, API_SECRET);
 
 const S3 = new AWS.S3({
@@ -33,6 +40,7 @@ const upload = (Key, Body) => new Promise((resolve, reject) => {
 });
 
 function save(data) {
+    console.log('Uploading data');
     upload(`data-${Date.now()}.json`, JSON.stringify(data))
     .then(() => {
         console.log('Uploaded data');
