@@ -1,23 +1,49 @@
-const path = require('path');
+require('dotenv').config();
+
 const http = require('http');
-const fs = require('fs');
+const AWS = require('aws-sdk');
+
 const propertypro = require('./sitescrappers/propertypro');
-const nigeriapropertycentre = require('./sitescrappers/nigeriapropertycenter');
 const scrapperLauncher = require('./scrapperLauncher');
 const { Generator } = require('./addressConverter/addressToLatLng');
 
+const API_KEY = process.env.API_KEY;
+const API_SECRET = process.env.API_SECRET;
+const BUCKET_REGION = process.env.BUCKET_REGION;
+const BUCKET_ID = process.env.BUCKET_ID;
+
+const credentials = new AWS.Credentials(API_KEY, API_SECRET);
+
+const S3 = new AWS.S3({
+    region: BUCKET_REGION,
+    credentials
+});
+
+const upload = (Key, Body) => new Promise((resolve, reject) => {
+    S3.upload({
+        Bucket: BUCKET_ID,
+        Key,
+        Body: Body,
+        ACL: 'public-read',
+        ContentType: "application/json",
+    }, (err, data) => {
+        if (err) return reject(err);
+        return resolve(data);
+    });
+});
+
 function save(data) {
-    console.log('data:len', data.length);
-    fs.writeFile(path.join(__dirname,`/data/data.json`), JSON.stringify(data), (err) => {
-        if (err) throw err;
-        console.log('Sending request to', `${process.env.DATA_SERVER}/data`);
-        http.get(`${process.env.DATA_SERVER}/data`, (res) => {
+    upload(`data-${Date.now()}.json`, JSON.stringify(data))
+    .then(() => {
+        http.get(`${process.env.DATA_SERVER}/data/${Date.now()}`, (res) => {
             if (res.statusCode === 200) {
                 console.log("Done! with status code : ", res.statusCode);
             } else {
                 console.error("Failed! wit status code : ", res.statusCode);
             }
         });
+    }).catch((err) => {
+        throw err
     });
 }
 
@@ -25,12 +51,10 @@ function start() {
     console.log('Scrapper: Started');
 
     Promise.all([
-        scrapperLauncher(propertypro.loader, propertypro.scrapper),
-        scrapperLauncher(nigeriapropertycentre.loader, nigeriapropertycentre.scrapper)
-    ])
-    .then(([ propertyproData, nigeriapropertycentreData = []]) => {
+        scrapperLauncher(propertypro.loader, propertypro.scrapper),])
+    .then(([ propertyproData]) => {
 
-        const allproperties = nigeriapropertycentreData.concat(propertyproData);
+        const allproperties = propertyproData;
 
         let addresses = allproperties.map((d) => d.address);
         const latLngsGen = Generator(addresses);

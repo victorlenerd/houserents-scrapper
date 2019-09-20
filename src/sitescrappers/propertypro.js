@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const stringToDate = require("../utils/stringToDate");
 
-const no_pages = process.env.NODE_ENV === 'development' ? 20 : 1485;
+const no_pages = process.env.NODE_ENV === 'development' ? 1 : 1485;
 const url = 'https://www.propertypro.ng/property-for-rent/lagos/flat-apartment?page=';
 
 function* LoadPageGen() {
