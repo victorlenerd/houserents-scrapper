@@ -12,7 +12,7 @@
     "start:upload": "node ./src/upload.js",
     "start:server:cron": "concurrently --kill-others \"yarn start:server\"  \"yarn start:cron\"",
     "start:server:upload": "concurrently --kill-others \"yarn start:server\" \"yarn start:upload\"",
-    "test": "mocha ./test --exit --timeout=6000"
+    "test": "mocha ./test --exit --timeout=15000"
   },
   "repository": {
     "type": "git",

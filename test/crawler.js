@@ -7,15 +7,16 @@ const scrapper = require('../src/scrapper');
 
 describe("Scrapper", function () {
 
-    this.timeout(10000);
+    this.timeout(15000);
 
     it('Sends http request when scrapping in done', (done) => {
         const httpRequest = sinon.stub(http, 'get');
         scrapper();
         setTimeout(() => {
+            console.log(httpRequest);
             done();
             expect(httpRequest.calledOnce).to.equal(true);
-        }, 5000);
+        }, 10000);
     });
 
 });
