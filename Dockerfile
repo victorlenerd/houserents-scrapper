@@ -11,6 +11,8 @@ COPY test /usr/src/scrapper/test
 
 RUN npm install
 
+ARG BUCKET_ID
+ARG BUCKET_REGION
 ARG PORT
 ARG DATA_SERVER
 ARG REDIS_HOST
