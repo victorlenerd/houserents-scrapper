@@ -6,7 +6,8 @@ const expect = require('chai').expect;
 const scrapper = require('../src/scrapper');
 
 describe("Scrapper", function () {
-    this.timeout(6000);
+
+    this.timeout(10000);
 
     it('Sends http request when scrapping in done', (done) => {
         const httpRequest = sinon.stub(http, 'get');
