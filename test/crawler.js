@@ -15,7 +15,7 @@ describe("Scrapper", function () {
         setTimeout(() => {
             done();
             expect(httpRequest.calledOnce).to.equal(true);
-        }, 60000);
+        }, 40000);
     });
 
 });
