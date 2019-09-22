@@ -4,11 +4,14 @@ const redis = require('redis');
 
 const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT;
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
 const redisClient = redis.createClient({
     host: REDIS_HOST,
     port: REDIS_PORT
 });
+
+redisClient.AUTH(REDIS_PASSWORD)
 
 redisClient.on("error", function (err) {
     console.log("Redis Error " + err);
