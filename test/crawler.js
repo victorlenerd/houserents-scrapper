@@ -7,7 +7,7 @@ const scrapper = require('../src/scrapper');
 
 describe("Scrapper", function () {
 
-    this.timeout(60000);
+    this.timeout(8000);
 
     it('Sends http request when scrapping in done', (done) => {
         const httpRequest = sinon.stub(http, 'get');
@@ -15,7 +15,7 @@ describe("Scrapper", function () {
         setTimeout(() => {
             done();
             expect(httpRequest.calledOnce).to.equal(true);
-        }, 40000);
+        }, 4000);
     });
 
 });
