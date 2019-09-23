@@ -43,10 +43,11 @@ const upload = (Key, Body) => new Promise((resolve, reject) => {
 
 function save(data) {
     console.log('Uploading data');
-    upload(`data-${Date.now()}.json`, JSON.stringify(data))
+    const dataId = Date.now();
+    upload(`data-${dataId}.json`, JSON.stringify(data))
     .then(() => {
         console.log('Uploaded data');
-        http.get(`${process.env.DATA_SERVER}/data/data-${Date.now()}.json`, (res) => {
+        http.get(`${process.env.DATA_SERVER}/data/data-${dataId}.json`, (res) => {
             if (res.statusCode === 200) {
                 console.log("Done! with status code : ", res.statusCode);
             } else {
